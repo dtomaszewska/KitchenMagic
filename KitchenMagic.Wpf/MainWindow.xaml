@@ -1,12 +1,211 @@
-﻿<Window x:Class="KitchenMagic.Wpf.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KitchenMagic.Wpf"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+﻿<Window
+		x:Class="KitchenMagic.Wpf.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:viewModels="clr-namespace:KitchenMagic.Wpf.ViewModels"
+		xmlns:converters="clr-namespace:KitchenMagic.Wpf.Converters"
+		mc:Ignorable="d"
+	Title="{Binding WindowTitle}" >
+
+	<Window.DataContext>
+		<viewModels:MainWindowViewModel />
+	</Window.DataContext>
+
+	<Window.InputBindings>
+		<KeyBinding
+				Command="{Binding AddRecipeCommand}"
+				Modifiers="Control"
+				Key="N" />
+		<KeyBinding
+				Command="{Binding EditRecipeCommand}"
+				Modifiers="Control"
+				Key="E" />
+		<KeyBinding
+				Command="{Binding RemoveRecipeCommand}"
+				Modifiers="Control"
+				Key="D" />
+		<KeyBinding
+				Command="{Binding PrintRecipeCommand}"
+				Modifiers="Control"
+				Key="P" />
+		<KeyBinding
+				Command="{Binding AddCategoryCommand}"
+				Modifiers="Control"
+				Key="C" />
+		<KeyBinding
+				Command="{Binding EditCategoriesCommand}"
+				Modifiers="Control"
+				Key="W" />
+	</Window.InputBindings>
+
+	<Window.Resources>
+		<converters:BoolNegationToVisibilityConverter x:Key="BoolNegation" />
+		<converters:LoginStateToManuItemTextConverter x:Key="LoginState" />
+	</Window.Resources>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+					Width="*" />
+			<ColumnDefinition
+					Width="5" />
+			<ColumnDefinition
+					Width="3*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition
+					Height="Auto" />
+
+			<RowDefinition
+					Height="*" />
+		</Grid.RowDefinitions>
+
+		<DockPanel
+				Grid.Row="0"
+				Grid.ColumnSpan="3" >
+			<Menu
+					DockPanel.Dock="Top" >
+
+				<MenuItem
+						Header="{StaticResource Recipes}" >
+					<MenuItem
+							Header="{StaticResource AddRecipe}"
+							InputGestureText="Ctrl+N"
+							Command="{Binding AddRecipeCommand}" >
+						<MenuItem.Icon>
+							<Image
+									Source="Resources/images/icon_add.png"
+									Stretch="UniformToFill"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center" />
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem
+							Header="{StaticResource EditRecipe}"
+							InputGestureText="Ctrl+E"
+							Command="{Binding EditRecipeCommand}" >
+						<MenuItem.Icon>
+							<Image
+									Source="Resources/images/icon_edit.png"
+									Stretch="UniformToFill"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center" />
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem
+							Header="{StaticResource RemoveRecipe}"
+							InputGestureText="Ctrl+D"
+							Command="{Binding RemoveRecipeCommand}" >
+						<MenuItem.Icon>
+							<Image
+									Source="Resources/images/icon_delete.png"
+									Stretch="UniformToFill"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center" />
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem
+							Header="{StaticResource PrintRecipe}"
+							InputGestureText="Ctrl+P"
+							Command="{Binding PrintRecipeCommand}" >
+						<MenuItem.Icon>
+							<Image
+									Source="Resources/images/icon_print.png"
+									Stretch="UniformToFill"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center" />
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem
+							Header="{StaticResource SendRecipe}"
+							Command="{Binding SendRecipeCommand}" >
+						<MenuItem.Icon>
+							<Image
+									Source="Resources/images/icon_send.png"
+									Stretch="UniformToFill"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center" />
+						</MenuItem.Icon>
+					</MenuItem>
+
+				</MenuItem>
+
+				<MenuItem
+						Header="{StaticResource Categories}" >
+					<MenuItem
+							Header="{StaticResource AddCategory}"
+							InputGestureText="Ctrl+C"
+							Command="{Binding AddCategoryCommand}" >
+						<MenuItem.Icon>
+							<Image
+									Source="Resources/images/icon_add.png"
+									Stretch="UniformToFill"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center" />
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem
+							Header="{StaticResource EditCategories}"
+							InputGestureText="Ctrl+W"
+							Command="{Binding EditCategoriesCommand}" >
+						<MenuItem.Icon>
+							<Image
+									Source="Resources/images/icon_edit.png"
+									Stretch="UniformToFill"
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center" />
+						</MenuItem.Icon>
+					</MenuItem>
+				</MenuItem>
+				<Separator />
+
+				<MenuItem
+						Header="{Binding IsUserLoggedIn, Converter={StaticResource LoginState}}"
+						Command="{Binding ChangeLoginStateCommand}" />
+
+			</Menu>
+
+		</DockPanel>
+
+		<DockPanel
+				Grid.Row="1"
+				Grid.Column="0" >
+			<StackPanel
+					DockPanel.Dock="Left"
+					CanHorizontallyScroll="True"
+					CanVerticallyScroll="True" />
+		</DockPanel>
+
+		<GridSplitter
+				Grid.Row="1"
+				Grid.Column="1"
+				Width="5"
+				HorizontalAlignment="Stretch" />
+
+		<StackPanel
+				Visibility="{Binding IsUserLoggedIn, Converter={StaticResource BoolNegation}}"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Stretch"
+				Grid.Row="1"
+				Grid.Column="2" >
+
+			<TextBlock
+					HorizontalAlignment="Stretch"
+					TextAlignment="Center"
+					Text="{StaticResource UserNotLogIn}"
+					Style="{StaticResource BigMessageLabelStyle}" />
+			<TextBlock
+					HorizontalAlignment="Stretch"
+					TextAlignment="Center"
+					Text="{StaticResource LogInToContinue}"
+					Style="{StaticResource BigMessageLabelStyle}" />
+			<Button x:Name="googleButton" HorizontalAlignment="Center" Width="250"
+					Background="Transparent" Command="{Binding LoginCommand}" BorderBrush="Transparent">
+				<Image Source="Resources/images/button_google_login.png" Stretch="UniformToFill"/>
+			</Button>
+
+		</StackPanel>
+	</Grid>
 </Window>

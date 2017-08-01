@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+	<!-- String resource that can be localized -->
+	<system:String x:Key="Recipes">_Przepisy</system:String>
+	<system:String x:Key="AddRecipe">Dodaj przepis</system:String>
+	<system:String x:Key="EditRecipe">Zmień przepis</system:String>
+	<system:String x:Key="RemoveRecipe">Usuń przepis</system:String>
+	<system:String x:Key="PrintRecipe">Wydrukuj przepis</system:String>
+	<system:String x:Key="Categories">_Kategorie</system:String>
+	<system:String x:Key="AddCategory">Dodaj nową kategorie</system:String>
+	<system:String x:Key="EditCategories">Edytuj kategorie</system:String>
+	<system:String x:Key="SendRecipe">Podziel się przepisem</system:String>
+	<system:String x:Key="Login">Zaloguj się</system:String>
+	<system:String x:Key="Logout">Wyloguj się</system:String>
+	<system:String x:Key="UserNotLogIn">Nie jesteś zalogowany!</system:String>
+	<system:String x:Key="LogInToContinue">Zaloguj się do swojego konta google by kontynuować</system:String>
+
+</ResourceDictionary>
