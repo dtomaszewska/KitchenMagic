@@ -7,6 +7,7 @@
 		xmlns:viewModels="clr-namespace:KitchenMagic.Wpf.ViewModels"
 		xmlns:converters="clr-namespace:KitchenMagic.Wpf.Converters"
 		mc:Ignorable="d"
+		Icon="Resources/images/icon.png"
 	Title="{Binding WindowTitle}" >
 
 	<Window.DataContext>
