@@ -41,9 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="DTO\Category.cs" />
+    <Compile Include="DTO\Ingredient.cs" />
+    <Compile Include="DTO\Recipe.cs" />
+    <Compile Include="DTO\Enums.cs" />
+    <Compile Include="PO\CategoryPO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IGoogleLoginService.cs" />
+    <Compile Include="Services\Stubs\CategoryServiceStub.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
