@@ -1,0 +1,32 @@
+﻿<UserControl
+		x:Class="KitchenMagic.Wpf.ContentControl.UserNotLoggedIn"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		mc:Ignorable="d" >
+
+	<StackPanel>
+		<TextBlock
+				HorizontalAlignment="Stretch"
+				TextAlignment="Center"
+				Text="{StaticResource UserNotLogIn}"
+				Style="{StaticResource BigMessageLabelStyle}" />
+		<TextBlock
+				HorizontalAlignment="Stretch"
+				TextAlignment="Center"
+				Text="{StaticResource LogInToContinue}"
+				Style="{StaticResource BigMessageLabelStyle}" />
+		<Button
+				x:Name="googleButton"
+				HorizontalAlignment="Center"
+				Width="250"
+				Background="Transparent"
+				Command="{Binding LoginCommand}"
+				BorderBrush="Transparent" >
+			<Image
+					Source="pack://application:,,,/Resources/images/button_google_login.png"
+					Stretch="UniformToFill" />
+		</Button>
+	</StackPanel>
+</UserControl>

@@ -6,9 +6,9 @@ namespace KitchenMagic.Wpf.MvxApp
 {
 	class MvxApp : MvxApplication
 	{
-		public MvxApp()
+		public override void Initialize()
 		{
-			Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<MainWindowViewModel>());
+			RegisterAppStart<MainWindowViewModel>();
 		}
 	}
 }

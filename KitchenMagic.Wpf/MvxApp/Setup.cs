@@ -16,17 +16,18 @@ namespace KitchenMagic.Wpf.MvxApp
 
 		protected override IMvxApplication CreateApp()
 		{
-			return new Wpf.MvxApp.MvxApp();
+			return new MvxApp();
 		}
 
 		public override void Initialize()
 		{
 			base.Initialize();
 			RegisterTypes();
-	}
+		}
 		private void RegisterTypes()
 		{
 			Mvx.RegisterType<IGoogleLoginService, GoogleLoginServiceWpf>();
+			Mvx.RegisterType<ICategoryService, CategoryServiceStub>();
 		}
 	}
 }

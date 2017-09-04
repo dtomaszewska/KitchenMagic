@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using KitchenMagic.Wpf.ViewModels;
 
 namespace KitchenMagic.Wpf
 {
@@ -10,6 +11,7 @@ namespace KitchenMagic.Wpf
 		public MainWindow()
 		{
 			InitializeComponent();
+			Loaded += (sender, args) => { ((MainWindowViewModel)base.DataContext).Start(); };
 		}
 	}
 }

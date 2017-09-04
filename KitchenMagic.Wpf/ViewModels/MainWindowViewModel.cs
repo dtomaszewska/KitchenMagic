@@ -1,4 +1,5 @@
-﻿using KitchenMagic.Common.Services;
+﻿using KitchenMagic.Common.PO;
+using KitchenMagic.Common.Services;
 using KitchenMagic.Wpf.Extensions;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -11,6 +12,21 @@ namespace KitchenMagic.Wpf.ViewModels
 	internal class MainWindowViewModel : MvxViewModel
 	{
 		private bool _isUserLoggedIn;
+		private readonly ICategoryService _categoryService;
+		private MvxObservableCollection<CategoryPO> _categories;
+		private MvxViewModel _currentStateViewModel;
+
+		public MainWindowViewModel()
+		{
+			_categoryService = Mvx.Resolve<ICategoryService>();
+		}
+
+		public override async void Start()
+		{
+			base.Start();
+			Categories = new MvxObservableCollection<CategoryPO>(await _categoryService.GetAll());
+			IsUserLoggedIn = IsUserLoggedIn;
+		}
 
 		public ICommand AddCategoryCommand => new RelayCommand(AddCategoryCommandAction);
 
@@ -34,8 +50,25 @@ namespace KitchenMagic.Wpf.ViewModels
 
 		public bool IsUserLoggedIn
 		{
-			get { return _isUserLoggedIn; }
-			set { SetProperty(ref _isUserLoggedIn, value); }
+			get => _isUserLoggedIn;
+			set
+			{
+				SetProperty(ref _isUserLoggedIn, value);
+				if (!_isUserLoggedIn)
+					CurrentStateViewModel = new UserNotLoggedInViewModel();
+			}
+		}
+
+		public MvxObservableCollection<CategoryPO> Categories
+		{
+			get => _categories;
+			set => SetProperty(ref _categories, value);
+		}
+
+		public MvxViewModel CurrentStateViewModel
+		{
+			get => _currentStateViewModel;
+			set => SetProperty(ref _currentStateViewModel, value);
 		}
 
 		private void AddCategoryCommandAction() {}

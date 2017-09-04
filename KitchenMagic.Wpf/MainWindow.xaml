@@ -6,9 +6,10 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:viewModels="clr-namespace:KitchenMagic.Wpf.ViewModels"
 		xmlns:converters="clr-namespace:KitchenMagic.Wpf.Converters"
+		xmlns:contentControl="clr-namespace:KitchenMagic.Wpf.ContentControl"
 		mc:Ignorable="d"
 		Icon="Resources/images/icon.png"
-	Title="{Binding WindowTitle}" >
+		Title="{Binding WindowTitle}" >
 
 	<Window.DataContext>
 		<viewModels:MainWindowViewModel />
@@ -42,8 +43,15 @@
 	</Window.InputBindings>
 
 	<Window.Resources>
-		<converters:BoolNegationToVisibilityConverter x:Key="BoolNegation" />
-		<converters:LoginStateToManuItemTextConverter x:Key="LoginState" />
+		<converters:BoolNegationToVisibilityConverter
+				x:Key="BoolNegation" />
+		<converters:LoginStateToManuItemTextConverter
+				x:Key="LoginState" />
+
+		<DataTemplate
+				DataType="{x:Type viewModels:UserNotLoggedInViewModel}" >
+			<contentControl:UserNotLoggedIn />
+		</DataTemplate>
 	</Window.Resources>
 
 	<Grid>
@@ -176,7 +184,22 @@
 			<StackPanel
 					DockPanel.Dock="Left"
 					CanHorizontallyScroll="True"
-					CanVerticallyScroll="True" />
+					CanVerticallyScroll="True" >
+				<TreeView
+						ItemsSource="{Binding Categories}"
+						BorderBrush="Transparent"
+						BorderThickness="0" >
+					<TreeView.ItemTemplate>
+						<HierarchicalDataTemplate
+								ItemsSource="{Binding Path=ChildCategories}" >
+							<StackPanel>
+								<TextBlock
+										Text="{Binding Name}" />
+							</StackPanel>
+						</HierarchicalDataTemplate>
+					</TreeView.ItemTemplate>
+				</TreeView>
+			</StackPanel>
 		</DockPanel>
 
 		<GridSplitter
@@ -192,20 +215,8 @@
 				Grid.Row="1"
 				Grid.Column="2" >
 
-			<TextBlock
-					HorizontalAlignment="Stretch"
-					TextAlignment="Center"
-					Text="{StaticResource UserNotLogIn}"
-					Style="{StaticResource BigMessageLabelStyle}" />
-			<TextBlock
-					HorizontalAlignment="Stretch"
-					TextAlignment="Center"
-					Text="{StaticResource LogInToContinue}"
-					Style="{StaticResource BigMessageLabelStyle}" />
-			<Button x:Name="googleButton" HorizontalAlignment="Center" Width="250"
-					Background="Transparent" Command="{Binding LoginCommand}" BorderBrush="Transparent">
-				<Image Source="Resources/images/button_google_login.png" Stretch="UniformToFill"/>
-			</Button>
+			<ContentControl
+					Content="{Binding Path=CurrentStateViewModel}" />
 
 		</StackPanel>
 	</Grid>

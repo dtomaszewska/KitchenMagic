@@ -35,15 +35,9 @@ namespace KitchenMagic.Wpf
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
-			SelectCulture(CultureInfo.InstalledUICulture.Name);
-		}
-
-		protected override void OnActivated(System.EventArgs e)
-		{
 			if (!_setupComplete)
 				DoSetup();
-
-			base.OnActivated(e);
+			SelectCulture(CultureInfo.InstalledUICulture.Name);
 		}
 
 		public static void SelectCulture(string culture)
