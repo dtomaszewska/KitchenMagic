@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace KitchenMagic.Common.PO
 {
-	public class CategoryPO : INotifyPropertyChanged
+	public class CategoryPO : BasePO
 	{
 		private CategoryPO _parentCategory;
 
@@ -15,8 +13,6 @@ namespace KitchenMagic.Common.PO
 		public string Name { get; set; }
 
 		public List<CategoryPO> ChildCategories { get; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		public CategoryPO()
 		{
@@ -53,11 +49,6 @@ namespace KitchenMagic.Common.PO
 				ChildCategories.Remove(cat);
 				OnPropertyChanged(nameof(ChildCategories));
 			}
-		}
-
-		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

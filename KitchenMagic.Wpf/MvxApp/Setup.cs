@@ -1,4 +1,5 @@
 ﻿using KitchenMagic.Common.Services;
+using KitchenMagic.Common.Services.Stubs;
 using KitchenMagic.Wpf.Services;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -28,6 +29,7 @@ namespace KitchenMagic.Wpf.MvxApp
 		{
 			Mvx.RegisterType<IGoogleLoginService, GoogleLoginServiceWpf>();
 			Mvx.RegisterType<ICategoryService, CategoryServiceStub>();
+			Mvx.RegisterType<IRecipeService, RecipeServiceStub>();
 		}
 	}
 }

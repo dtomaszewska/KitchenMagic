@@ -79,6 +79,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ContentControl\RecipeList.xaml.cs">
+      <DependentUpon>RecipeList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentControl\UserNotLoggedIn.xaml.cs">
       <DependentUpon>UserNotLoggedIn.xaml</DependentUpon>
     </Compile>
@@ -89,7 +92,12 @@
     <Compile Include="Services\GoogleLoginServiceWpf.cs" />
     <Compile Include="MvxApp\Setup.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\RecipeListViewModel.cs" />
     <Compile Include="ViewModels\UserNotLoggedInViewModel.cs" />
+    <Page Include="ContentControl\RecipeList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ContentControl\UserNotLoggedIn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,4 +1,5 @@
-﻿using KitchenMagic.Common.PO;
+﻿using System;
+using KitchenMagic.Common.PO;
 using KitchenMagic.Common.Services;
 using KitchenMagic.Wpf.Extensions;
 using MvvmCross.Core.ViewModels;
@@ -46,6 +47,8 @@ namespace KitchenMagic.Wpf.ViewModels
 
 		public ICommand SendRecipeCommand => new RelayCommand(SendRecipeCommandAction);
 
+		public ICommand CategorySelectedCommand => new MvxCommand<Guid>(CategorySelectedCommandAction);
+
 		public string WindowTitle => Assembly.GetExecutingAssembly().GetName().Name.Split('.').FirstOrDefault();
 
 		public bool IsUserLoggedIn
@@ -69,6 +72,12 @@ namespace KitchenMagic.Wpf.ViewModels
 		{
 			get => _currentStateViewModel;
 			set => SetProperty(ref _currentStateViewModel, value);
+		}
+
+		private void CategorySelectedCommandAction(Guid categoryId)
+		{
+			if (categoryId != Guid.Empty)
+				CurrentStateViewModel = new RecipeListViewModel(categoryId);
 		}
 
 		private void AddCategoryCommandAction() {}

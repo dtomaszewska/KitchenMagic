@@ -8,6 +8,7 @@
 		xmlns:converters="clr-namespace:KitchenMagic.Wpf.Converters"
 		xmlns:contentControl="clr-namespace:KitchenMagic.Wpf.ContentControl"
 		mc:Ignorable="d"
+		Name="Root"
 		Icon="Resources/images/icon.png"
 		Title="{Binding WindowTitle}" >
 
@@ -52,6 +53,11 @@
 				DataType="{x:Type viewModels:UserNotLoggedInViewModel}" >
 			<contentControl:UserNotLoggedIn />
 		</DataTemplate>
+		<DataTemplate
+				DataType="{x:Type viewModels:RecipeListViewModel}" >
+			<contentControl:RecipeList />
+		</DataTemplate>
+
 	</Window.Resources>
 
 	<Grid>
@@ -66,7 +72,6 @@
 		<Grid.RowDefinitions>
 			<RowDefinition
 					Height="Auto" />
-
 			<RowDefinition
 					Height="*" />
 		</Grid.RowDefinitions>
@@ -192,10 +197,12 @@
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate
 								ItemsSource="{Binding Path=ChildCategories}" >
-							<StackPanel>
-								<TextBlock
-										Text="{Binding Name}" />
-							</StackPanel>
+							<Button
+									Content="{Binding Name}"
+									Background="Transparent"
+									BorderThickness="0"
+									Command="{Binding DataContext.CategorySelectedCommand, Source={x:Reference Root}}"
+									CommandParameter="{Binding Id}" />
 						</HierarchicalDataTemplate>
 					</TreeView.ItemTemplate>
 				</TreeView>
@@ -208,16 +215,14 @@
 				Width="5"
 				HorizontalAlignment="Stretch" />
 
-		<StackPanel
+		<DockPanel
 				Visibility="{Binding IsUserLoggedIn, Converter={StaticResource BoolNegation}}"
-				VerticalAlignment="Center"
-				HorizontalAlignment="Stretch"
 				Grid.Row="1"
 				Grid.Column="2" >
 
 			<ContentControl
 					Content="{Binding Path=CurrentStateViewModel}" />
 
-		</StackPanel>
+		</DockPanel>
 	</Grid>
 </Window>

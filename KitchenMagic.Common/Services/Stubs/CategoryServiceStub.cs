@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace KitchenMagic.Common.Services
+namespace KitchenMagic.Common.Services.Stubs
 {
 	public class CategoryServiceStub : ICategoryService
 	{
