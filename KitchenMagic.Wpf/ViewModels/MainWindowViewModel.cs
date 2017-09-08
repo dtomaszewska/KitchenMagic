@@ -1,11 +1,12 @@
-﻿using System;
-using KitchenMagic.Common.PO;
+﻿using KitchenMagic.Common.PO;
 using KitchenMagic.Common.Services;
 using KitchenMagic.Wpf.Extensions;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace KitchenMagic.Wpf.ViewModels
@@ -14,19 +15,37 @@ namespace KitchenMagic.Wpf.ViewModels
 	{
 		private bool _isUserLoggedIn;
 		private readonly ICategoryService _categoryService;
-		private MvxObservableCollection<CategoryPO> _categories;
+		private MvxObservableCollection<ITreeListElement> _treeViewElements;
 		private MvxViewModel _currentStateViewModel;
+		private readonly IRecipeService _recipeService;
 
 		public MainWindowViewModel()
 		{
 			_categoryService = Mvx.Resolve<ICategoryService>();
+			_recipeService = Mvx.Resolve<IRecipeService>();
 		}
 
 		public override async void Start()
 		{
 			base.Start();
-			Categories = new MvxObservableCollection<CategoryPO>(await _categoryService.GetAll());
+			TreeViewElements = await GetTreeElements();
 			IsUserLoggedIn = IsUserLoggedIn;
+		}
+
+		private async Task<MvxObservableCollection<ITreeListElement>> GetTreeElements()
+		{
+			var treeElements = new MvxObservableCollection<ITreeListElement>();
+			var categories = await _categoryService.GetAll();
+			treeElements.AddRange(categories);
+			foreach (var treeElement in treeElements)
+			{
+				treeElement.ChildList = new MvxObservableCollection<ITreeListElement>();
+				treeElement.ChildList.AddRange((treeElement as CategoryPO)?.ChildCategories);
+				var recipe = await _recipeService.GetAll(treeElement.Id);
+				treeElement.ChildList.AddRange(recipe);
+			}
+
+			return treeElements;
 		}
 
 		public ICommand AddCategoryCommand => new RelayCommand(AddCategoryCommandAction);
@@ -47,7 +66,7 @@ namespace KitchenMagic.Wpf.ViewModels
 
 		public ICommand SendRecipeCommand => new RelayCommand(SendRecipeCommandAction);
 
-		public ICommand CategorySelectedCommand => new MvxCommand<Guid>(CategorySelectedCommandAction);
+		public ICommand CategorySelectedCommand => new MvxCommand<ITreeListElement>(CategorySelectedCommandAction);
 
 		public string WindowTitle => Assembly.GetExecutingAssembly().GetName().Name.Split('.').FirstOrDefault();
 
@@ -62,10 +81,10 @@ namespace KitchenMagic.Wpf.ViewModels
 			}
 		}
 
-		public MvxObservableCollection<CategoryPO> Categories
+		public MvxObservableCollection<ITreeListElement> TreeViewElements
 		{
-			get => _categories;
-			set => SetProperty(ref _categories, value);
+			get => _treeViewElements;
+			set => SetProperty(ref _treeViewElements, value);
 		}
 
 		public MvxViewModel CurrentStateViewModel
@@ -74,10 +93,18 @@ namespace KitchenMagic.Wpf.ViewModels
 			set => SetProperty(ref _currentStateViewModel, value);
 		}
 
-		private void CategorySelectedCommandAction(Guid categoryId)
+		private void CategorySelectedCommandAction(ITreeListElement element)
 		{
-			if (categoryId != Guid.Empty)
-				CurrentStateViewModel = new RecipeListViewModel(categoryId);
+			if (element is CategoryPO cat)
+			{
+				if (cat.Id != Guid.Empty)
+					CurrentStateViewModel = new RecipeListViewModel(cat.Id);
+			}
+			else if (element is RecipePO rec)
+			{
+				if (rec.Id != Guid.Empty)
+					CurrentStateViewModel = new RecipeViewModel(rec.Id);
+			}
 		}
 
 		private void AddCategoryCommandAction() {}

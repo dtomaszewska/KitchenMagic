@@ -1,10 +1,11 @@
 using KitchenMagic.Common.DTO;
+using MvvmCross.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 
 namespace KitchenMagic.Common.PO
 {
-	public class RecipePO : BasePO
+	public class RecipePO : BasePO, ITreeListElement
 	{
 		public RecipePO()
 		{
@@ -26,5 +27,13 @@ namespace KitchenMagic.Common.PO
 		{
 			Categories.Add(category);
 		}
+
+		public string Name
+		{
+			get => Title;
+			set => Title = value;
+		}
+
+		public MvxObservableCollection<ITreeListElement> ChildList { get; set; }
 	}
 }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MvvmCross.Core.ViewModels;
+using System;
 using System.Linq;
 
 namespace KitchenMagic.Common.PO
 {
-	public class CategoryPO : BasePO
+	public class CategoryPO : BasePO, ITreeListElement
 	{
 		private CategoryPO _parentCategory;
 
@@ -12,16 +12,16 @@ namespace KitchenMagic.Common.PO
 
 		public string Name { get; set; }
 
-		public List<CategoryPO> ChildCategories { get; }
+		public MvxObservableCollection<CategoryPO> ChildCategories { get; }
 
 		public CategoryPO()
 		{
-			ChildCategories = new List<CategoryPO>();
+			ChildCategories = new MvxObservableCollection<CategoryPO>();
 		}
 
 		public CategoryPO ParentCategory
 		{
-			get { return _parentCategory; }
+			get => _parentCategory;
 			set
 			{
 				if (value == _parentCategory)
@@ -31,6 +31,8 @@ namespace KitchenMagic.Common.PO
 				_parentCategory.AddChild(this);
 			}
 		}
+
+		public MvxObservableCollection<ITreeListElement> ChildList { get; set; }
 
 		public void AddChild(CategoryPO category)
 		{

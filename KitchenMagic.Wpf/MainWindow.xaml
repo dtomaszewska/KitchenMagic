@@ -44,8 +44,8 @@
 	</Window.InputBindings>
 
 	<Window.Resources>
-		<converters:BoolNegationToVisibilityConverter
-				x:Key="BoolNegation" />
+		<converters:IsCategoryToFontWeightConverter
+				x:Key="IsCategoryConverter" />
 		<converters:LoginStateToManuItemTextConverter
 				x:Key="LoginState" />
 
@@ -191,18 +191,21 @@
 					CanHorizontallyScroll="True"
 					CanVerticallyScroll="True" >
 				<TreeView
-						ItemsSource="{Binding Categories}"
+						ItemsSource="{Binding TreeViewElements}"
 						BorderBrush="Transparent"
 						BorderThickness="0" >
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate
-								ItemsSource="{Binding Path=ChildCategories}" >
+								ItemsSource="{Binding Path=ChildList}" >
 							<Button
-									Content="{Binding Name}"
 									Background="Transparent"
 									BorderThickness="0"
 									Command="{Binding DataContext.CategorySelectedCommand, Source={x:Reference Root}}"
-									CommandParameter="{Binding Id}" />
+									CommandParameter="{Binding .}" >
+								<TextBlock
+										Text="{Binding Name}"
+										FontWeight="{Binding ., Converter={StaticResource IsCategoryConverter}}" />
+							</Button>
 						</HierarchicalDataTemplate>
 					</TreeView.ItemTemplate>
 				</TreeView>
@@ -216,7 +219,6 @@
 				HorizontalAlignment="Stretch" />
 
 		<DockPanel
-				Visibility="{Binding IsUserLoggedIn, Converter={StaticResource BoolNegation}}"
 				Grid.Row="1"
 				Grid.Column="2" >
 
