@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace KitchenMagic.Wpf.ViewModels
@@ -78,6 +79,8 @@ namespace KitchenMagic.Wpf.ViewModels
 				SetProperty(ref _isUserLoggedIn, value);
 				if (!_isUserLoggedIn)
 					CurrentStateViewModel = new UserNotLoggedInViewModel();
+				else
+					CurrentStateViewModel = new RecipeListViewModel();
 			}
 		}
 
@@ -127,12 +130,16 @@ namespace KitchenMagic.Wpf.ViewModels
 		{
 			if (await Mvx.Resolve<IGoogleLoginService>().Login())
 				IsUserLoggedIn = true;
+			else
+				MessageBox.Show("Something goes wrong :(", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		private async void LogoutCommandAction()
 		{
 			if (await Mvx.Resolve<IGoogleLoginService>().Logout())
 				IsUserLoggedIn = false;
+			else
+				MessageBox.Show("Something goes wrong :(", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		private void PrintRecipeCommandAction() {}

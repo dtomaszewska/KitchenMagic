@@ -8,5 +8,11 @@
 		public const string GoogleAppDataAccessEndpoint = "https://www.googleapis.com/auth/drive.appfolder";
 
 		public static string AccessToken { get; set; }
+
+		public const string ApplicationName = "Kitchen Magic";
+		public const string WPFCredentialPath = "Kitchen Magic";
+		public const string DriveAplicationDirectory = "KitchenMagic";
+		public const string DriveAplicationDb = "recipiesDb.sqlite";
+
 	}
 }

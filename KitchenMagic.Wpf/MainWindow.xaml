@@ -51,7 +51,7 @@
 
 		<DataTemplate
 				DataType="{x:Type viewModels:UserNotLoggedInViewModel}" >
-			<contentControl:UserNotLoggedIn />
+			<contentControl:UserNotLoggedIn GoogleButtonCommand="{Binding DataContext.LoginCommand, Source={x:Reference Root}}" />
 		</DataTemplate>
 		<DataTemplate
 				DataType="{x:Type viewModels:RecipeListViewModel}" >

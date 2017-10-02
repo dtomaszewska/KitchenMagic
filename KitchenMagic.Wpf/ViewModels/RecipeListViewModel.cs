@@ -13,6 +13,14 @@ namespace KitchenMagic.Wpf.ViewModels
 		private Guid _categoryId;
 		private readonly IRecipeService _recipeService;
 
+		public RecipeListViewModel()
+		{
+			_recipeService = Mvx.Resolve<IRecipeService>();
+			RecipeList = new MvxObservableCollection<RecipePO>();
+
+			CategoryId = Guid.Empty;
+		}
+
 		public RecipeListViewModel(Guid categoryId)
 		{
 			_recipeService = Mvx.Resolve<IRecipeService>();

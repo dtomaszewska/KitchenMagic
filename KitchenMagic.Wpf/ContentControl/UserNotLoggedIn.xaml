@@ -4,9 +4,11 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		mc:Ignorable="d">
+		mc:Ignorable="d"
+		x:Name="root">
 
 	<StackPanel
+			DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
 			VerticalAlignment="Center"
 			HorizontalAlignment="Stretch" >
 		<TextBlock
@@ -20,11 +22,10 @@
 				Text="{StaticResource LogInToContinue}"
 				Style="{StaticResource BigMessageLabelStyle}" />
 		<Button
-				x:Name="googleButton"
 				HorizontalAlignment="Center"
 				Width="250"
 				Background="Transparent"
-				Command="{Binding LoginCommand}"
+				Command="{Binding GoogleButtonCommand, ElementName=root}"
 				BorderBrush="Transparent" >
 			<Image
 					Source="pack://application:,,,/Resources/images/button_google_login.png"
