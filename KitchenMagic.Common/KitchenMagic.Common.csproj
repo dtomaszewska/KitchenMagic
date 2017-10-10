@@ -59,6 +59,7 @@
     <Compile Include="DTO\Enums.cs" />
     <Compile Include="PO\BasePO.cs" />
     <Compile Include="PO\CategoryPO.cs" />
+    <Compile Include="PO\IngredientPO.cs" />
     <Compile Include="PO\RecipePO.cs" />
     <Compile Include="PO\ITreeListElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

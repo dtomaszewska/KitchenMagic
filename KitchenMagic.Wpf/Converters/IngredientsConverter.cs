@@ -1,0 +1,27 @@
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
+using KitchenMagic.Common.DTO;
+using KitchenMagic.Common.PO;
+
+namespace KitchenMagic.Wpf.Converters
+{
+	internal class IngredientsConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var ingredient = (IngredientPO)value;
+			return ingredient != null
+				? $"{ingredient.Name} - {ingredient.Count} {(ingredient.Unit == Unit.item ? string.Empty : ingredient.Unit.ToString())}"
+				: null;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value == null)
+				return false;
+
+			return !(bool)value;
+		}
+	}
+}

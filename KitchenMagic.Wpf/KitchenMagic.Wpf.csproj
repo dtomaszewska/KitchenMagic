@@ -97,14 +97,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ContentControl\IngredientsListControl.xaml.cs">
+      <DependentUpon>IngredientsListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContentControl\Recipe.xaml.cs">
+      <DependentUpon>Recipe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentControl\RecipeList.xaml.cs">
       <DependentUpon>RecipeList.xaml</DependentUpon>
     </Compile>
     <Compile Include="ContentControl\UserNotLoggedIn.xaml.cs">
       <DependentUpon>UserNotLoggedIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IngredientsConverter.cs" />
+    <Compile Include="Converters\ListOfStringToJoinedOneConverter.cs" />
     <Compile Include="Converters\LoginStateToManuItemTextConverter.cs" />
-    <Compile Include="Converters\IsCategoryToFontWeightConverter.cs" />
+    <Compile Include="Converters\IsCategoryToFontStyleConverter.cs" />
     <Compile Include="MvxApp\MvxApp.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Services\GoogleLoginServiceWpf.cs" />
@@ -113,6 +121,14 @@
     <Compile Include="ViewModels\RecipeListViewModel.cs" />
     <Compile Include="ViewModels\RecipeViewModel.cs" />
     <Compile Include="ViewModels\UserNotLoggedInViewModel.cs" />
+    <Page Include="ContentControl\IngredientsListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContentControl\Recipe.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ContentControl\RecipeList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

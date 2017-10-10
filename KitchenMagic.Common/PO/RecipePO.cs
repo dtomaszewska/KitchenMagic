@@ -1,4 +1,3 @@
-using KitchenMagic.Common.DTO;
 using MvvmCross.Core.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,13 @@ namespace KitchenMagic.Common.PO
 	{
 		public RecipePO()
 		{
-			Ingredients = new List<Ingredient>();
+			Ingredients = new List<IngredientPO>();
 			Categories = new List<CategoryPO>();
 		}
 
 		public Guid Id { get; set; }
 		public string Title { get; set; }
-		public List<Ingredient> Ingredients { get; set; }
+		public List<IngredientPO> Ingredients { get; set; }
 		public string Directions { get; set; }
 		public string Image { get; set; }
 		public long Calories { get; set; }
