@@ -17,16 +17,52 @@
 	<system:String x:Key="UserNotLogIn">You are not login!</system:String>
 	<system:String x:Key="LogInToContinue">Login to your google account to continue</system:String>
 
+	<system:String x:Key="IngredientsTitleLabel">Ingredients</system:String>
+	<system:String x:Key="RecipeTitleLabel">Recipe</system:String>
+	<system:String x:Key="CategoriesTitleLabel">Categories</system:String>
+	<system:String x:Key="CaloriesTitleLabel">Calories</system:String>
+	<system:String x:Key="CookTimeTitleLabel">Cook Time</system:String>
+	<system:String x:Key="ReadyInTitleLabel">Ready In</system:String>
 
+	<!-- COLORES -->
+	<Brush x:Key="AlmostWhiteGray">#F9FAFC</Brush>
+	<Brush x:Key="Gray">#595959</Brush>
+	<Brush x:Key="AlmostBlackGray">#333333</Brush>
+
+	<!-- IMAGE styles -->
+	<Style x:Key="MenuIconImageStyle" TargetType="{x:Type Image}">
+		<Setter Property="Stretch" Value="UniformToFill" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+	</Style>
+
+	<!-- LABEL styles -->
 	<Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}">
 		<Setter Property="FontSize" Value="12" />
 		<Setter Property="TextWrapping" Value="Wrap" />
-
+		<Setter Property="Foreground" Value="{StaticResource Gray}" />
 	</Style>
 
-	<Style x:Key="BigMessageLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource LabelStyle}">
-		<Setter Property="FontSize" Value="42" />
+	<Style x:Key="BoldLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource LabelStyle}">
 		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="Foreground" Value="{StaticResource AlmostBlackGray}" />
+	</Style>
+
+	<Style x:Key="TitleLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldLabelStyle}">
+		<Setter Property="FontSize" Value="26" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+	</Style>
+
+	<Style x:Key="SubtitleLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldLabelStyle}">
+		<Setter Property="FontSize" Value="20" />
+	</Style>
+
+	<Style x:Key="RecipeLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource LabelStyle}">
+		<Setter Property="FontSize" Value="16" />
+	</Style>
+
+	<Style x:Key="BigMessageLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldLabelStyle}">
+		<Setter Property="FontSize" Value="42" />
 	</Style>
 
 </ResourceDictionary>

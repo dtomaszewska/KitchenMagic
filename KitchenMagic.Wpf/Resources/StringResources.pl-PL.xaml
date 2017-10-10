@@ -17,4 +17,11 @@
 	<system:String x:Key="UserNotLogIn">Nie jesteś zalogowany!</system:String>
 	<system:String x:Key="LogInToContinue">Zaloguj się do swojego konta google by kontynuować</system:String>
 
+	<system:String x:Key="IngredientsTitleLabel">Składniki</system:String>
+	<system:String x:Key="RecipeTitleLabel">Przepis</system:String>
+	<system:String x:Key="CategoriesTitleLabel">Kategorie</system:String>
+	<system:String x:Key="CaloriesTitleLabel">Kalorie</system:String>
+	<system:String x:Key="CookTimeTitleLabel">Czas przygotowania</system:String>
+	<system:String x:Key="ReadyInTitleLabel">Gotowe w</system:String>
+
 </ResourceDictionary>

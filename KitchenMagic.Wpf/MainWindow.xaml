@@ -44,18 +44,26 @@
 	</Window.InputBindings>
 
 	<Window.Resources>
-		<converters:IsCategoryToFontWeightConverter
+		<converters:IsCategoryToFontStyleConverter
 				x:Key="IsCategoryConverter" />
 		<converters:LoginStateToManuItemTextConverter
 				x:Key="LoginState" />
 
 		<DataTemplate
 				DataType="{x:Type viewModels:UserNotLoggedInViewModel}" >
-			<contentControl:UserNotLoggedIn GoogleButtonCommand="{Binding DataContext.LoginCommand, Source={x:Reference Root}}" />
+			<contentControl:UserNotLoggedIn
+					GoogleButtonCommand="{Binding DataContext.LoginCommand, Source={x:Reference Root}}"
+					Background="{StaticResource AlmostWhiteGray}" />
 		</DataTemplate>
 		<DataTemplate
 				DataType="{x:Type viewModels:RecipeListViewModel}" >
-			<contentControl:RecipeList />
+			<contentControl:RecipeList
+					Background="{StaticResource AlmostWhiteGray}" />
+		</DataTemplate>
+		<DataTemplate
+				DataType="{x:Type viewModels:RecipeViewModel}" >
+			<contentControl:Recipe
+					Background="{StaticResource AlmostWhiteGray}" />
 		</DataTemplate>
 
 	</Window.Resources>
@@ -80,6 +88,8 @@
 				Grid.Row="0"
 				Grid.ColumnSpan="3" >
 			<Menu
+					BorderThickness="5"
+					Background="{StaticResource AlmostWhiteGray}"
 					DockPanel.Dock="Top" >
 
 				<MenuItem
@@ -91,9 +101,7 @@
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_add.png"
-									Stretch="UniformToFill"
-									VerticalAlignment="Center"
-									HorizontalAlignment="Center" />
+									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
 					<MenuItem
@@ -103,9 +111,7 @@
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_edit.png"
-									Stretch="UniformToFill"
-									VerticalAlignment="Center"
-									HorizontalAlignment="Center" />
+									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
 					<MenuItem
@@ -115,9 +121,7 @@
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_delete.png"
-									Stretch="UniformToFill"
-									VerticalAlignment="Center"
-									HorizontalAlignment="Center" />
+									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
 					<MenuItem
@@ -127,9 +131,7 @@
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_print.png"
-									Stretch="UniformToFill"
-									VerticalAlignment="Center"
-									HorizontalAlignment="Center" />
+									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
 					<MenuItem
@@ -138,9 +140,7 @@
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_send.png"
-									Stretch="UniformToFill"
-									VerticalAlignment="Center"
-									HorizontalAlignment="Center" />
+									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
 
@@ -155,9 +155,7 @@
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_add.png"
-									Stretch="UniformToFill"
-									VerticalAlignment="Center"
-									HorizontalAlignment="Center" />
+									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
 					<MenuItem
@@ -167,9 +165,7 @@
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_edit.png"
-									Stretch="UniformToFill"
-									VerticalAlignment="Center"
-									HorizontalAlignment="Center" />
+									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
 				</MenuItem>
@@ -189,11 +185,13 @@
 			<StackPanel
 					DockPanel.Dock="Left"
 					CanHorizontallyScroll="True"
-					CanVerticallyScroll="True" >
+					CanVerticallyScroll="True"
+					Background="{StaticResource AlmostWhiteGray}" >
 				<TreeView
 						ItemsSource="{Binding TreeViewElements}"
 						BorderBrush="Transparent"
-						BorderThickness="0" >
+						BorderThickness="0"
+						Background="Transparent" >
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate
 								ItemsSource="{Binding Path=ChildList}" >
@@ -204,7 +202,7 @@
 									CommandParameter="{Binding .}" >
 								<TextBlock
 										Text="{Binding Name}"
-										FontWeight="{Binding ., Converter={StaticResource IsCategoryConverter}}" />
+										Style="{Binding ., Converter={StaticResource IsCategoryConverter}}" />
 							</Button>
 						</HierarchicalDataTemplate>
 					</TreeView.ItemTemplate>
@@ -216,7 +214,8 @@
 				Grid.Row="1"
 				Grid.Column="1"
 				Width="5"
-				HorizontalAlignment="Stretch" />
+				HorizontalAlignment="Stretch"
+				Background="White" />
 
 		<DockPanel
 				Grid.Row="1"
