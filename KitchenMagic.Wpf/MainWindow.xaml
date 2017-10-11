@@ -68,7 +68,8 @@
 
 	</Window.Resources>
 
-	<Grid>
+	<Grid
+			Margin="{StaticResource SpliterSizeThickness}" >
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition
 					Width="*" />
@@ -88,7 +89,8 @@
 				Grid.Row="0"
 				Grid.ColumnSpan="3" >
 			<Menu
-					BorderThickness="5"
+					BorderThickness="0,0,0,5"
+					BorderBrush="{StaticResource SpliterColor}"
 					Background="{StaticResource AlmostWhiteGray}"
 					DockPanel.Dock="Top" >
 
@@ -213,9 +215,9 @@
 		<GridSplitter
 				Grid.Row="1"
 				Grid.Column="1"
-				Width="5"
+				Width="{StaticResource SpliterSize}"
 				HorizontalAlignment="Stretch"
-				Background="White" />
+				Background="{StaticResource SpliterColor}" />
 
 		<DockPanel
 				Grid.Row="1"

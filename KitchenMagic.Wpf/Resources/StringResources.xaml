@@ -24,7 +24,12 @@
 	<system:String x:Key="CookTimeTitleLabel">Cook Time</system:String>
 	<system:String x:Key="ReadyInTitleLabel">Ready In</system:String>
 
+	<!-- SIZES -->
+	<system:Double x:Key="SpliterSize">5</system:Double>
+	<Thickness x:Key="SpliterSizeThickness">5</Thickness>
+
 	<!-- COLORES -->
+	<Brush x:Key="SpliterColor">White</Brush>
 	<Brush x:Key="AlmostWhiteGray">#F9FAFC</Brush>
 	<Brush x:Key="Gray">#595959</Brush>
 	<Brush x:Key="AlmostBlackGray">#333333</Brush>
