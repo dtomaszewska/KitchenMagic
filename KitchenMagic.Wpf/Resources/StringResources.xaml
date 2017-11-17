@@ -8,14 +8,16 @@
 	<system:String x:Key="EditRecipe">Edit recipe</system:String>
 	<system:String x:Key="RemoveRecipe">Remove recipe</system:String>
 	<system:String x:Key="PrintRecipe">Print recipe</system:String>
-	<system:String x:Key="Categories">_Categories</system:String>
-	<system:String x:Key="AddCategory">Add new category</system:String>
-	<system:String x:Key="EditCategories">Edit categories</system:String>
 	<system:String x:Key="SendRecipe">Send recipe</system:String>
+	<system:String x:Key="CreateShoppingList">Create shopping list</system:String>
+	<system:String x:Key="AddCategory">Add new category</system:String>
+	<system:String x:Key="EditCategoryName">Edit category name</system:String>
+	<system:String x:Key="EditCategoryContent">Edit category content</system:String>
 	<system:String x:Key="Login">Login</system:String>
 	<system:String x:Key="Logout">Logout</system:String>
 	<system:String x:Key="UserNotLogIn">You are not login!</system:String>
 	<system:String x:Key="LogInToContinue">Login to your google account to continue</system:String>
+	<system:String x:Key="Remove">Remove</system:String>
 
 	<system:String x:Key="IngredientsTitleLabel">Ingredients</system:String>
 	<system:String x:Key="RecipeTitleLabel">Recipe</system:String>

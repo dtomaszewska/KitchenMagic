@@ -79,6 +79,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -112,9 +113,8 @@
     <Compile Include="Converters\IngredientsConverter.cs" />
     <Compile Include="Converters\ListOfStringToJoinedOneConverter.cs" />
     <Compile Include="Converters\LoginStateToManuItemTextConverter.cs" />
-    <Compile Include="Converters\IsCategoryToFontStyleConverter.cs" />
+    <Compile Include="Converters\IsProperTypeToVisibilityConverter.cs" />
     <Compile Include="MvxApp\MvxApp.cs" />
-    <Compile Include="RelayCommand.cs" />
     <Compile Include="Services\GoogleLoginServiceWpf.cs" />
     <Compile Include="MvxApp\Setup.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -218,7 +218,9 @@
   <ItemGroup>
     <Resource Include="Resources\images\icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\images\icon_shopping.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

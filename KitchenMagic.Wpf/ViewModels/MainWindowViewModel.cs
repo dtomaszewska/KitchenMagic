@@ -1,6 +1,5 @@
 ﻿using KitchenMagic.Common.PO;
 using KitchenMagic.Common.Services;
-using KitchenMagic.Wpf.Extensions;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using System;
@@ -26,50 +25,39 @@ namespace KitchenMagic.Wpf.ViewModels
 			_recipeService = Mvx.Resolve<IRecipeService>();
 		}
 
-		public override async void Start()
-		{
-			base.Start();
-			TreeViewElements = await GetTreeElements();
-			IsUserLoggedIn = IsUserLoggedIn;
-		}
+		public ICommand ChangeLoginStateCommand => new MvxCommand(ChangeLoginStateCommandAction);
 
-		private async Task<MvxObservableCollection<ITreeListElement>> GetTreeElements()
-		{
-			var treeElements = new MvxObservableCollection<ITreeListElement>();
-			var categories = await _categoryService.GetAll();
-			treeElements.AddRange(categories);
-			foreach (var treeElement in treeElements)
-			{
-				treeElement.ChildList = new MvxObservableCollection<ITreeListElement>();
-				treeElement.ChildList.AddRange((treeElement as CategoryPO)?.ChildCategories);
-				var recipe = await _recipeService.GetAll(treeElement.Id);
-				treeElement.ChildList.AddRange(recipe);
-			}
+		public ICommand AddCategoryCommand => new MvxCommand<CategoryPO>(AddCategoryCommandAction);
 
-			return treeElements;
-		}
+		public ICommand AddRecipeCommand => new MvxCommand<CategoryPO>(AddRecipeCommandAction);
 
-		public ICommand AddCategoryCommand => new RelayCommand(AddCategoryCommandAction);
+		public ICommand EditCategoryNameCommand => new MvxCommand<CategoryPO>(EditCategoryNameCommandAction);
 
-		public ICommand AddRecipeCommand => new RelayCommand(AddRecipeCommandAction);
+		public ICommand EditCategoryContentCommand => new MvxCommand<CategoryPO>(EditCategoryContentCommandAction);
 
-		public ICommand ChangeLoginStateCommand => new RelayCommand(ChangeLoginStateCommandAction);
+		public ICommand RemoveCategoryCommand => new MvxCommand<CategoryPO>(RemoveCategoryCommandAction);
 
-		public ICommand EditCategoriesCommand => new RelayCommand(EditCategoriesCommandAction);
+		public ICommand EditRecipeCommand => new MvxCommand<RecipePO>(EditRecipeCommandAction);
 
-		public ICommand EditRecipeCommand => new RelayCommand(EditRecipeCommandAction);
+		public ICommand PrintRecipeCommand => new MvxCommand<RecipePO>(PrintRecipeCommandAction);
 
-		public ICommand LoginCommand => new RelayCommand(LoginCommandAction);
+		public ICommand RemoveRecipeCommand => new MvxCommand<RecipePO>(RemoveRecipeCommandAction);
 
-		public ICommand PrintRecipeCommand => new RelayCommand(PrintRecipeCommandAction);
+		public ICommand SendRecipeCommand => new MvxCommand<RecipePO>(SendRecipeCommandAction);
 
-		public ICommand RemoveRecipeCommand => new RelayCommand(RemoveRecipeCommandAction);
-
-		public ICommand SendRecipeCommand => new RelayCommand(SendRecipeCommandAction);
+		public ICommand CreateShoppingListCommand => new MvxCommand(CreateShoppingListCommandAction);
 
 		public ICommand CategorySelectedCommand => new MvxCommand<ITreeListElement>(CategorySelectedCommandAction);
 
+		public ICommand RecipeSelectedCommand => new MvxCommand<ITreeListElement>(RecipeSelectedCommandAction);
+
 		public string WindowTitle => Assembly.GetExecutingAssembly().GetName().Name.Split('.').FirstOrDefault();
+
+		public override async void Start()
+		{
+			base.Start();
+			IsUserLoggedIn = await Mvx.Resolve<IGoogleLoginService>().Login();
+		}
 
 		public bool IsUserLoggedIn
 		{
@@ -77,6 +65,7 @@ namespace KitchenMagic.Wpf.ViewModels
 			set
 			{
 				SetProperty(ref _isUserLoggedIn, value);
+				RefreshRecipeList();
 				if (!_isUserLoggedIn)
 					CurrentStateViewModel = new UserNotLoggedInViewModel();
 				else
@@ -95,25 +84,6 @@ namespace KitchenMagic.Wpf.ViewModels
 			get => _currentStateViewModel;
 			set => SetProperty(ref _currentStateViewModel, value);
 		}
-
-		private void CategorySelectedCommandAction(ITreeListElement element)
-		{
-			if (element is CategoryPO cat)
-			{
-				if (cat.Id != Guid.Empty)
-					CurrentStateViewModel = new RecipeListViewModel(cat.Id);
-			}
-			else if (element is RecipePO rec)
-			{
-				if (rec.Id != Guid.Empty)
-					CurrentStateViewModel = new RecipeViewModel(rec.Id);
-			}
-		}
-
-		private void AddCategoryCommandAction() {}
-
-		private void AddRecipeCommandAction() {}
-
 		private void ChangeLoginStateCommandAction()
 		{
 			if (IsUserLoggedIn)
@@ -121,10 +91,6 @@ namespace KitchenMagic.Wpf.ViewModels
 			else
 				LoginCommandAction();
 		}
-
-		private void EditCategoriesCommandAction() {}
-
-		private void EditRecipeCommandAction() {}
 
 		private async void LoginCommandAction()
 		{
@@ -142,10 +108,61 @@ namespace KitchenMagic.Wpf.ViewModels
 				MessageBox.Show("Something goes wrong :(", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
-		private void PrintRecipeCommandAction() {}
+		private async Task RefreshRecipeList()
+		{
+			if (!IsUserLoggedIn)
+				TreeViewElements.Clear();
+			else
+				TreeViewElements = await GetTreeElements();
+		}
 
-		private void RemoveRecipeCommandAction() {}
+		private async Task<MvxObservableCollection<ITreeListElement>> GetTreeElements()
+		{
+			var treeElements = new MvxObservableCollection<ITreeListElement>();
+			var categories = await _categoryService.GetAll();
+			treeElements.AddRange(categories);
 
-		private void SendRecipeCommandAction() {}
+			foreach (var treeElement in treeElements)
+			{
+				treeElement.ChildList = new MvxObservableCollection<ITreeListElement>();
+				treeElement.ChildList.AddRange((treeElement as CategoryPO)?.ChildCategories);
+				var recipe = await _recipeService.GetAll(treeElement.Id);
+				treeElement.ChildList.AddRange(recipe);
+			}
+
+			return treeElements;
+		}
+
+		private void CategorySelectedCommandAction(ITreeListElement element)
+		{
+			if (element.Id != Guid.Empty)
+				CurrentStateViewModel = new RecipeListViewModel(element.Id);
+		}
+
+		private void RecipeSelectedCommandAction(ITreeListElement element)
+		{
+			if (element.Id != Guid.Empty)
+				CurrentStateViewModel = new RecipeViewModel(element.Id);
+		}
+
+		private void AddCategoryCommandAction(CategoryPO category) {}
+
+		private void AddRecipeCommandAction(CategoryPO category) {}
+
+		private void EditCategoryNameCommandAction(CategoryPO category) {}
+
+		private void EditCategoryContentCommandAction(CategoryPO category) {}
+
+		private void RemoveCategoryCommandAction(CategoryPO category) {}
+
+		private void EditRecipeCommandAction(RecipePO recipePO) {}
+
+		private void PrintRecipeCommandAction(RecipePO recipePO) {}
+
+		private void RemoveRecipeCommandAction(RecipePO recipePO) {}
+
+		private void SendRecipeCommandAction(RecipePO recipePO) {}
+
+		private void CreateShoppingListCommandAction() {}
 	}
 }

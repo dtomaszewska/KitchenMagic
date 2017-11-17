@@ -34,30 +34,27 @@
 				Modifiers="Control"
 				Key="P" />
 		<KeyBinding
-				Command="{Binding AddCategoryCommand}"
+				Command="{Binding CreateShoppingListCommand}"
 				Modifiers="Control"
-				Key="C" />
-		<KeyBinding
-				Command="{Binding EditCategoriesCommand}"
-				Modifiers="Control"
-				Key="W" />
+				Key="L" />
 	</Window.InputBindings>
 
 	<Window.Resources>
-		<converters:IsCategoryToFontStyleConverter
-				x:Key="IsCategoryConverter" />
+		<converters:IsProperTypeToVisibilityConverter
+				x:Key="IsProperTypeConverter" />
 		<converters:LoginStateToManuItemTextConverter
-				x:Key="LoginState" />
+			x:Key="LoginState" />
 
 		<DataTemplate
 				DataType="{x:Type viewModels:UserNotLoggedInViewModel}" >
 			<contentControl:UserNotLoggedIn
-					GoogleButtonCommand="{Binding DataContext.LoginCommand, Source={x:Reference Root}}"
+					GoogleButtonCommand="{Binding DataContext.ChangeLoginStateCommand, Source={x:Reference Root}}"
 					Background="{StaticResource AlmostWhiteGray}" />
 		</DataTemplate>
 		<DataTemplate
 				DataType="{x:Type viewModels:RecipeListViewModel}" >
 			<contentControl:RecipeList
+					ElementClickCommand="{Binding DataContext.RecipeSelectedCommand, Source={x:Reference Root}}"
 					Background="{StaticResource AlmostWhiteGray}" />
 		</DataTemplate>
 		<DataTemplate
@@ -94,12 +91,13 @@
 					Background="{StaticResource AlmostWhiteGray}"
 					DockPanel.Dock="Top" >
 
-				<MenuItem
-						Header="{StaticResource Recipes}" >
 					<MenuItem
 							Header="{StaticResource AddRecipe}"
+							Command="{Binding AddRecipeCommand}"
+							IsEnabled="{Binding IsUserLoggedIn}"
 							InputGestureText="Ctrl+N"
-							Command="{Binding AddRecipeCommand}" >
+							ToolTip="Ctrl+N"
+							ToolTipService.ShowOnDisabled="False">
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_add.png"
@@ -108,8 +106,11 @@
 					</MenuItem>
 					<MenuItem
 							Header="{StaticResource EditRecipe}"
+							Command="{Binding EditRecipeCommand}"
+							IsEnabled="{Binding IsUserLoggedIn}"
 							InputGestureText="Ctrl+E"
-							Command="{Binding EditRecipeCommand}" >
+							ToolTip="Ctrl+E"
+							ToolTipService.ShowOnDisabled="False">
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_edit.png"
@@ -118,8 +119,11 @@
 					</MenuItem>
 					<MenuItem
 							Header="{StaticResource RemoveRecipe}"
+							Command="{Binding RemoveRecipeCommand}"
+							IsEnabled="{Binding IsUserLoggedIn}"
 							InputGestureText="Ctrl+D"
-							Command="{Binding RemoveRecipeCommand}" >
+							ToolTip="Ctrl+D"
+							ToolTipService.ShowOnDisabled="False">
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_delete.png"
@@ -128,8 +132,11 @@
 					</MenuItem>
 					<MenuItem
 							Header="{StaticResource PrintRecipe}"
+							Command="{Binding PrintRecipeCommand}"
+							IsEnabled="{Binding IsUserLoggedIn}"
 							InputGestureText="Ctrl+P"
-							Command="{Binding PrintRecipeCommand}" >
+							ToolTip="Ctrl+P"
+							ToolTipService.ShowOnDisabled="False">
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_print.png"
@@ -138,39 +145,28 @@
 					</MenuItem>
 					<MenuItem
 							Header="{StaticResource SendRecipe}"
-							Command="{Binding SendRecipeCommand}" >
+							Command="{Binding SendRecipeCommand}"
+							IsEnabled="{Binding IsUserLoggedIn}" >
 						<MenuItem.Icon>
 							<Image
 									Source="Resources/images/icon_send.png"
 									Style="{StaticResource MenuIconImageStyle}" />
 						</MenuItem.Icon>
 					</MenuItem>
-
-				</MenuItem>
-
 				<MenuItem
-						Header="{StaticResource Categories}" >
-					<MenuItem
-							Header="{StaticResource AddCategory}"
-							InputGestureText="Ctrl+C"
-							Command="{Binding AddCategoryCommand}" >
-						<MenuItem.Icon>
-							<Image
-									Source="Resources/images/icon_add.png"
+							Header="{StaticResource CreateShoppingList}"
+							Command="{Binding CreateShoppingListCommand}"
+						IsEnabled="{Binding IsUserLoggedIn}"
+						InputGestureText="Ctrl+L"
+						ToolTip="Ctrl+L"
+						ToolTipService.ShowOnDisabled="False">
+					<MenuItem.Icon>
+						<Image
+									Source="Resources/images/icon_shopping.png"
 									Style="{StaticResource MenuIconImageStyle}" />
-						</MenuItem.Icon>
-					</MenuItem>
-					<MenuItem
-							Header="{StaticResource EditCategories}"
-							InputGestureText="Ctrl+W"
-							Command="{Binding EditCategoriesCommand}" >
-						<MenuItem.Icon>
-							<Image
-									Source="Resources/images/icon_edit.png"
-									Style="{StaticResource MenuIconImageStyle}" />
-						</MenuItem.Icon>
-					</MenuItem>
+					</MenuItem.Icon>
 				</MenuItem>
+
 				<Separator />
 
 				<MenuItem
@@ -197,15 +193,75 @@
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate
 								ItemsSource="{Binding Path=ChildList}" >
-							<Button
-									Background="Transparent"
-									BorderThickness="0"
-									Command="{Binding DataContext.CategorySelectedCommand, Source={x:Reference Root}}"
-									CommandParameter="{Binding .}" >
-								<TextBlock
-										Text="{Binding Name}"
-										Style="{Binding ., Converter={StaticResource IsCategoryConverter}}" />
-							</Button>
+							<StackPanel>
+								<Button
+										Background="Transparent"
+										BorderThickness="0"
+										Command="{Binding DataContext.CategorySelectedCommand, Source={x:Reference Root}}"
+										CommandParameter="{Binding .}"
+										Visibility="{Binding ., Converter={StaticResource IsProperTypeConverter}, ConverterParameter='CategoryPO'}">
+									<Button.ContextMenu>
+										<ContextMenu>
+											<MenuItem
+													Header="{StaticResource AddRecipe}"
+													Command="{Binding DataContext.AddRecipeCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+											<MenuItem
+													Header="{StaticResource AddCategory}"
+													Command="{Binding DataContext.AddCategoryCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+											<Separator />
+											<MenuItem
+													Header="{StaticResource EditCategoryName}"
+													Command="{Binding DataContext.EditCategoryNameCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+											<MenuItem
+													Header="{StaticResource EditCategoryContent}"
+													Command="{Binding DataContext.EditCategoryContentCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+											<Separator />
+											<MenuItem
+													Header="{StaticResource Remove}"
+													Command="{Binding DataContext.RemoveCategoryCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+										</ContextMenu>
+									</Button.ContextMenu>
+									<TextBlock
+											Text="{Binding Name}"
+											Style="{StaticResource BoldLabelStyle}" />
+								</Button>
+								<Button
+										Background="Transparent"
+										BorderThickness="0"
+										Command="{Binding DataContext.RecipeSelectedCommand, Source={x:Reference Root}}"
+										CommandParameter="{Binding .}"
+										Visibility="{Binding ., Converter={StaticResource IsProperTypeConverter}, ConverterParameter='RecipePO'}">
+									<Button.ContextMenu>
+										<ContextMenu>
+											<MenuItem
+													Header="{StaticResource EditRecipe}"
+													Command="{Binding DataContext.EditRecipeCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+											<MenuItem
+													Header="{StaticResource RemoveRecipe}"
+													Command="{Binding DataContext.RemoveRecipeCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+											<Separator />
+											<MenuItem
+													Header="{StaticResource PrintRecipe}"
+													Command="{Binding DataContext.PrintRecipeCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+											<MenuItem
+													Header="{StaticResource SendRecipe}"
+													Command="{Binding DataContext.SendRecipeCommand, Source={x:Reference Root}}"
+													CommandParameter="{Binding .}" />
+										</ContextMenu>
+									</Button.ContextMenu>
+									<TextBlock
+											Text="{Binding Name}"
+											Style="{StaticResource LabelStyle}" />
+								</Button>
+							</StackPanel>
 						</HierarchicalDataTemplate>
 					</TreeView.ItemTemplate>
 				</TreeView>
