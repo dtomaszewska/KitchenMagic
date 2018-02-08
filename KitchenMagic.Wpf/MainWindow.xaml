@@ -7,6 +7,7 @@
 		xmlns:viewModels="clr-namespace:KitchenMagic.Wpf.ViewModels"
 		xmlns:converters="clr-namespace:KitchenMagic.Wpf.Converters"
 		xmlns:contentControl="clr-namespace:KitchenMagic.Wpf.ContentControl"
+		xmlns:templateSelectors="clr-namespace:KitchenMagic.Wpf.TemplateSelectors"
 		mc:Ignorable="d"
 		Name="Root"
 		Icon="Resources/images/icon.png"
@@ -43,7 +44,7 @@
 		<converters:IsProperTypeToVisibilityConverter
 				x:Key="IsProperTypeConverter" />
 		<converters:LoginStateToManuItemTextConverter
-			x:Key="LoginState" />
+				x:Key="LoginState" />
 
 		<DataTemplate
 				DataType="{x:Type viewModels:UserNotLoggedInViewModel}" >
@@ -60,6 +61,11 @@
 		<DataTemplate
 				DataType="{x:Type viewModels:RecipeViewModel}" >
 			<contentControl:Recipe
+					Background="{StaticResource AlmostWhiteGray}" />
+		</DataTemplate>
+		<DataTemplate
+				DataType="{x:Type viewModels:RecipeAddEditViewModel}" >
+			<contentControl:RecipeAddEdit
 					Background="{StaticResource AlmostWhiteGray}" />
 		</DataTemplate>
 
@@ -91,79 +97,85 @@
 					Background="{StaticResource AlmostWhiteGray}"
 					DockPanel.Dock="Top" >
 
-					<MenuItem
-							Header="{StaticResource AddRecipe}"
-							Command="{Binding AddRecipeCommand}"
-							IsEnabled="{Binding IsUserLoggedIn}"
-							InputGestureText="Ctrl+N"
-							ToolTip="Ctrl+N"
-							ToolTipService.ShowOnDisabled="False">
-						<MenuItem.Icon>
-							<Image
-									Source="Resources/images/icon_add.png"
-									Style="{StaticResource MenuIconImageStyle}" />
-						</MenuItem.Icon>
-					</MenuItem>
-					<MenuItem
-							Header="{StaticResource EditRecipe}"
-							Command="{Binding EditRecipeCommand}"
-							IsEnabled="{Binding IsUserLoggedIn}"
-							InputGestureText="Ctrl+E"
-							ToolTip="Ctrl+E"
-							ToolTipService.ShowOnDisabled="False">
-						<MenuItem.Icon>
-							<Image
-									Source="Resources/images/icon_edit.png"
-									Style="{StaticResource MenuIconImageStyle}" />
-						</MenuItem.Icon>
-					</MenuItem>
-					<MenuItem
-							Header="{StaticResource RemoveRecipe}"
-							Command="{Binding RemoveRecipeCommand}"
-							IsEnabled="{Binding IsUserLoggedIn}"
-							InputGestureText="Ctrl+D"
-							ToolTip="Ctrl+D"
-							ToolTipService.ShowOnDisabled="False">
-						<MenuItem.Icon>
-							<Image
-									Source="Resources/images/icon_delete.png"
-									Style="{StaticResource MenuIconImageStyle}" />
-						</MenuItem.Icon>
-					</MenuItem>
-					<MenuItem
-							Header="{StaticResource PrintRecipe}"
-							Command="{Binding PrintRecipeCommand}"
-							IsEnabled="{Binding IsUserLoggedIn}"
-							InputGestureText="Ctrl+P"
-							ToolTip="Ctrl+P"
-							ToolTipService.ShowOnDisabled="False">
-						<MenuItem.Icon>
-							<Image
-									Source="Resources/images/icon_print.png"
-									Style="{StaticResource MenuIconImageStyle}" />
-						</MenuItem.Icon>
-					</MenuItem>
-					<MenuItem
-							Header="{StaticResource SendRecipe}"
-							Command="{Binding SendRecipeCommand}"
-							IsEnabled="{Binding IsUserLoggedIn}" >
-						<MenuItem.Icon>
-							<Image
-									Source="Resources/images/icon_send.png"
-									Style="{StaticResource MenuIconImageStyle}" />
-						</MenuItem.Icon>
-					</MenuItem>
 				<MenuItem
-							Header="{StaticResource CreateShoppingList}"
-							Command="{Binding CreateShoppingListCommand}"
+						Header="{StaticResource AddRecipe}"
+						Command="{Binding AddRecipeCommand}"
 						IsEnabled="{Binding IsUserLoggedIn}"
-						InputGestureText="Ctrl+L"
-						ToolTip="Ctrl+L"
-						ToolTipService.ShowOnDisabled="False">
+						Style="{StaticResource MenuItemStyle}"
+						InputGestureText="Ctrl+N"
+						ToolTip="Ctrl+N"
+						ToolTipService.ShowOnDisabled="False" >
 					<MenuItem.Icon>
 						<Image
-									Source="Resources/images/icon_shopping.png"
-									Style="{StaticResource MenuIconImageStyle}" />
+								Source="Resources/images/icon_add.png"
+								Style="{StaticResource MenuIconImageStyle}" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem
+						Header="{StaticResource EditRecipe}"
+						Command="{Binding EditRecipeCommand}"
+						IsEnabled="{Binding IsUserLoggedIn}"
+						Style="{StaticResource MenuItemStyle}"
+						InputGestureText="Ctrl+E"
+						ToolTip="Ctrl+E"
+						ToolTipService.ShowOnDisabled="False" >
+					<MenuItem.Icon>
+						<Image
+								Source="Resources/images/icon_edit.png"
+								Style="{StaticResource MenuIconImageStyle}" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem
+						Header="{StaticResource RemoveRecipe}"
+						Command="{Binding RemoveRecipeCommand}"
+						IsEnabled="{Binding IsUserLoggedIn}"
+						Style="{StaticResource MenuItemStyle}"
+						InputGestureText="Ctrl+D"
+						ToolTip="Ctrl+D"
+						ToolTipService.ShowOnDisabled="False" >
+					<MenuItem.Icon>
+						<Image
+								Source="Resources/images/icon_delete.png"
+								Style="{StaticResource MenuIconImageStyle}" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem
+						Header="{StaticResource PrintRecipe}"
+						Command="{Binding PrintRecipeCommand}"
+						IsEnabled="{Binding IsUserLoggedIn}"
+						Style="{StaticResource MenuItemStyle}"
+						InputGestureText="Ctrl+P"
+						ToolTip="Ctrl+P"
+						ToolTipService.ShowOnDisabled="False" >
+					<MenuItem.Icon>
+						<Image
+								Source="Resources/images/icon_print.png"
+								Style="{StaticResource MenuIconImageStyle}" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem
+						Header="{StaticResource SendRecipe}"
+						Command="{Binding SendRecipeCommand}"
+						IsEnabled="{Binding IsUserLoggedIn}"
+						Style="{StaticResource MenuItemStyle}" >
+					<MenuItem.Icon>
+						<Image
+								Source="Resources/images/icon_send.png"
+								Style="{StaticResource MenuIconImageStyle}" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem
+						Header="{StaticResource CreateShoppingList}"
+						Command="{Binding CreateShoppingListCommand}"
+						IsEnabled="{Binding IsUserLoggedIn}"
+						Style="{StaticResource MenuItemStyle}"
+						InputGestureText="Ctrl+L"
+						ToolTip="Ctrl+L"
+						ToolTipService.ShowOnDisabled="False" >
+					<MenuItem.Icon>
+						<Image
+								Source="Resources/images/icon_shopping.png"
+								Style="{StaticResource MenuIconImageStyle}" />
 					</MenuItem.Icon>
 				</MenuItem>
 
@@ -171,7 +183,8 @@
 
 				<MenuItem
 						Header="{Binding IsUserLoggedIn, Converter={StaticResource LoginState}}"
-						Command="{Binding ChangeLoginStateCommand}" />
+						Command="{Binding ChangeLoginStateCommand}"
+						Style="{StaticResource MenuItemStyle}" />
 
 			</Menu>
 
@@ -195,11 +208,10 @@
 								ItemsSource="{Binding Path=ChildList}" >
 							<StackPanel>
 								<Button
-										Background="Transparent"
-										BorderThickness="0"
+										Style="{StaticResource ButtonStyle}"
 										Command="{Binding DataContext.CategorySelectedCommand, Source={x:Reference Root}}"
 										CommandParameter="{Binding .}"
-										Visibility="{Binding ., Converter={StaticResource IsProperTypeConverter}, ConverterParameter='CategoryPO'}">
+										Visibility="{Binding ., Converter={StaticResource IsProperTypeConverter}, ConverterParameter='CategoryPO'}" >
 									<Button.ContextMenu>
 										<ContextMenu>
 											<MenuItem
@@ -231,11 +243,10 @@
 											Style="{StaticResource BoldLabelStyle}" />
 								</Button>
 								<Button
-										Background="Transparent"
-										BorderThickness="0"
+										Style="{StaticResource ButtonStyle}"
 										Command="{Binding DataContext.RecipeSelectedCommand, Source={x:Reference Root}}"
 										CommandParameter="{Binding .}"
-										Visibility="{Binding ., Converter={StaticResource IsProperTypeConverter}, ConverterParameter='RecipePO'}">
+										Visibility="{Binding ., Converter={StaticResource IsProperTypeConverter}, ConverterParameter='RecipePO'}" >
 									<Button.ContextMenu>
 										<ContextMenu>
 											<MenuItem

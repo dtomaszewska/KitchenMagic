@@ -1,26 +1,114 @@
-using MvvmCross.Core.ViewModels;
 using System;
-using System.Collections.Generic;
+using MvvmCross.Core.ViewModels;
 
 namespace KitchenMagic.Common.PO
 {
+	[Serializable]
 	public class RecipePO : BasePO, ITreeListElement
 	{
 		public RecipePO()
 		{
-			Ingredients = new List<IngredientPO>();
-			Categories = new List<CategoryPO>();
+			Ingredients = new MvxObservableCollection<IngredientPO>();
+			Categories = new MvxObservableCollection<CategoryPO>();
 		}
 
 		public Guid Id { get; set; }
-		public string Title { get; set; }
-		public List<IngredientPO> Ingredients { get; set; }
-		public string Directions { get; set; }
-		public string Image { get; set; }
-		public long Calories { get; set; }
-		public TimeSpan CookTime { get; set; }
-		public TimeSpan ReadyIn { get; set; }
-		public List<CategoryPO> Categories { get; set; }
+
+		private string _title;
+
+		public string Title
+		{
+			get => _title;
+			set
+			{
+				_title = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private MvxObservableCollection<IngredientPO> _ingredients;
+
+		public MvxObservableCollection<IngredientPO> Ingredients
+		{
+			get => _ingredients;
+			set
+			{
+				_ingredients = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private string _directions;
+
+		public string Directions
+		{
+			get => _directions;
+			set
+			{
+				_directions = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private string _image;
+
+		public string Image
+		{
+			get => _image;
+			set
+			{
+				_image = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private long _calories;
+
+		public long Calories
+		{
+			get => _calories;
+			set
+			{
+				_calories = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private TimeSpan _cookTime;
+
+		public TimeSpan CookTime
+		{
+			get => _cookTime;
+			set
+			{
+				_cookTime = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private TimeSpan _readyIn;
+
+		public TimeSpan ReadyIn
+		{
+			get => _readyIn;
+			set
+			{
+				_readyIn = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private MvxObservableCollection<CategoryPO> _categories;
+
+		public MvxObservableCollection<CategoryPO> Categories
+		{
+			get => _categories;
+			set
+			{
+				_categories = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public void AddCategory(CategoryPO category)
 		{
@@ -33,6 +121,16 @@ namespace KitchenMagic.Common.PO
 			set => Title = value;
 		}
 
-		public MvxObservableCollection<ITreeListElement> ChildList { get; set; }
+		private MvxObservableCollection<ITreeListElement> _childList;
+
+		public MvxObservableCollection<ITreeListElement> ChildList
+		{
+			get => _childList;
+			set
+			{
+				_childList = value;
+				OnPropertyChanged();
+			}
+		}
 	}
 }

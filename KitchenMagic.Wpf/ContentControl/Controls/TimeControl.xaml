@@ -1,0 +1,27 @@
+﻿<UserControl
+		x:Class="KitchenMagic.Wpf.ContentControl.Controls.TimeControl"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:controls="clr-namespace:KitchenMagic.Wpf.ContentControl.Controls"
+		mc:Ignorable="d"
+		x:Name="root" >
+	<StackPanel
+			Orientation="Horizontal" >
+		<controls:TextBoxControl
+				x:Name="Hours"
+				BorderThickness="0"
+				BaseForegroundColor="{Binding BaseForegroundColor, ElementName=root}"
+				FontSize="{Binding FontSize, ElementName=root}" />
+		<TextBlock
+				Text=" : "
+				Foreground="{Binding BaseForegroundColor, ElementName=root}"
+				FontSize="{Binding FontSize, ElementName=root}" />
+		<controls:TextBoxControl
+				x:Name="Minutes"
+				BorderThickness="0"
+				BaseForegroundColor="{Binding BaseForegroundColor, ElementName=root}"
+				FontSize="{Binding FontSize, ElementName=root}" />
+	</StackPanel>
+</UserControl>

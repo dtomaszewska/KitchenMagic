@@ -1,13 +1,13 @@
-﻿using KitchenMagic.Common.PO;
-using KitchenMagic.Common.Services;
-using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using KitchenMagic.Common.PO;
+using KitchenMagic.Common.Services;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 
 namespace KitchenMagic.Wpf.ViewModels
 {
@@ -69,7 +69,7 @@ namespace KitchenMagic.Wpf.ViewModels
 				if (!_isUserLoggedIn)
 					CurrentStateViewModel = new UserNotLoggedInViewModel();
 				else
-					CurrentStateViewModel = new RecipeListViewModel();
+					CurrentStateViewModel = new RecipeListViewModel(Guid.Empty);
 			}
 		}
 
@@ -84,6 +84,7 @@ namespace KitchenMagic.Wpf.ViewModels
 			get => _currentStateViewModel;
 			set => SetProperty(ref _currentStateViewModel, value);
 		}
+
 		private void ChangeLoginStateCommandAction()
 		{
 			if (IsUserLoggedIn)
@@ -147,7 +148,11 @@ namespace KitchenMagic.Wpf.ViewModels
 
 		private void AddCategoryCommandAction(CategoryPO category) {}
 
-		private void AddRecipeCommandAction(CategoryPO category) {}
+		private void AddRecipeCommandAction(CategoryPO category)
+		{
+			if (category.Id != Guid.Empty)
+				CurrentStateViewModel = new RecipeAddEditViewModel(null);
+		}
 
 		private void EditCategoryNameCommandAction(CategoryPO category) {}
 
@@ -155,7 +160,11 @@ namespace KitchenMagic.Wpf.ViewModels
 
 		private void RemoveCategoryCommandAction(CategoryPO category) {}
 
-		private void EditRecipeCommandAction(RecipePO recipePO) {}
+		private void EditRecipeCommandAction(RecipePO recipePO)
+		{
+			if (recipePO.Id != Guid.Empty)
+				CurrentStateViewModel = new RecipeAddEditViewModel(recipePO.Id);
+		}
 
 		private void PrintRecipeCommandAction(RecipePO recipePO) {}
 

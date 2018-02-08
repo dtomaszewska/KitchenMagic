@@ -1,0 +1,110 @@
+﻿<UserControl
+		x:Class="KitchenMagic.Wpf.ContentControl.Controls.IngredientsEditionListControl"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:controls="clr-namespace:KitchenMagic.Wpf.ContentControl.Controls"
+		xmlns:templateSelectors="clr-namespace:KitchenMagic.Wpf.TemplateSelectors"
+		xmlns:po="clr-namespace:KitchenMagic.Common.PO;assembly=KitchenMagic.Common"
+		mc:Ignorable="d"
+		x:Name="root" >
+
+	<UserControl.Resources>
+
+		<templateSelectors:IngredientElementTemplateSelector
+				x:Key="ingredientTemplate" />
+		<DataTemplate
+				x:Key="ingredientElementTemplate"
+				DataType="po:IngredientPO" >
+			<StackPanel
+					Margin="5,5,5,0"
+					Orientation="Horizontal" >
+				<Button
+						Content="+"
+						Style="{StaticResource ButtonStyle}"
+						Command="{Binding AddElementCommand, Source={x:Reference root}}"
+						CommandParameter="{Binding .}" />
+				<Button
+						Content="-"
+						Margin="5,0"
+						Style="{StaticResource ButtonStyle}"
+						Command="{Binding RemoveElementCommand, Source={x:Reference root}}"
+						CommandParameter="{Binding .}" />
+				<CheckBox
+						IsChecked="{Binding IsTitle}"
+						VerticalAlignment="Center"
+						Margin="5,0" />
+				<TextBlock
+						x:Name="arrow"
+						FontFamily="Segoe MDL2 Assets"
+						FontSize="{StaticResource FontSize}"
+						Text="&#xE122;"
+						VerticalAlignment="Center" />
+				<TextBlock
+						Text=" " />
+				<controls:TextBoxControl
+						Text="{Binding Name}"
+						Style="{StaticResource TextBoxControlStyle}" />
+				<TextBlock
+						Text=" - "
+						Style="{StaticResource LabelStyle}" />
+				<controls:TextBoxControl
+						Text="{Binding Count}"
+						Style="{StaticResource TextBoxControlStyle}" />
+				<TextBlock
+						Text=" " />
+				<ComboBox
+						ItemsSource="{Binding Units, ElementName=root}"
+						Text="{Binding Unit}"
+						IsTextSearchCaseSensitive="False"
+						Style="{StaticResource ComboBoxStyle}" />
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate
+				x:Key="titleElementTemplate"
+				DataType="po:IngredientPO" >
+			<StackPanel
+					Margin="5,5,5,0"
+					Orientation="Horizontal" >
+				<Button
+						Content="+"
+						Style="{StaticResource ButtonStyle}"
+						Command="{Binding AddElementCommand, Source={x:Reference root}}"
+						CommandParameter="{Binding .}" />
+				<Button
+						Content="-"
+						Margin="5,0"
+						Style="{StaticResource ButtonStyle}"
+						Command="{Binding RemoveElementCommand, Source={x:Reference root}}"
+						CommandParameter="{Binding .}" />
+				<CheckBox
+						IsChecked="{Binding IsTitle}"
+						VerticalAlignment="Center"
+						Margin="5,0" />
+				<controls:TextBoxControl
+						Text="{Binding Name}"
+						Style="{StaticResource TextBoxControlBoldStyle}" />
+			</StackPanel>
+		</DataTemplate>
+	</UserControl.Resources>
+	<StackPanel>
+		<TextBlock
+				x:Name="title"
+				Text="{StaticResource IngredientsTitleLabel}"
+				Style="{StaticResource TitleLabelStyle}" />
+
+		<ItemsControl
+				x:Name="list"
+				ItemsSource="{Binding IngredientsList, ElementName=root}"
+				Height="230"
+				ItemTemplateSelector="{StaticResource ingredientTemplate}" >
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel
+							Orientation="Vertical" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>
+	</StackPanel>
+</UserControl>

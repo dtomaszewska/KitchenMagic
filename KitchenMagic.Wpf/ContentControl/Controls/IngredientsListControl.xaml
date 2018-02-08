@@ -1,0 +1,66 @@
+﻿<UserControl
+		x:Class="KitchenMagic.Wpf.ContentControl.Controls.IngredientsListControl"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:converters="clr-namespace:KitchenMagic.Wpf.Converters"
+		xmlns:templateSelectors="clr-namespace:KitchenMagic.Wpf.TemplateSelectors"
+		mc:Ignorable="d"
+		x:Name="root" >
+
+	<UserControl.Resources>
+		<converters:IngredientsConverter
+				x:Key="Ingredients" />
+
+		<templateSelectors:IngredientElementTemplateSelector
+				x:Key="ingredientTemplate" />
+		<DataTemplate
+				x:Key="ingredientElementTemplate" >
+			<StackPanel
+					Margin="5,5,5,0"
+					Orientation="Horizontal" >
+				<TextBlock
+						FontFamily="Segoe MDL2 Assets"
+						Style="{StaticResource LabelStyle}"
+						Text="&#xE122;"
+						VerticalAlignment="Center" />
+				<TextBlock
+						Text=" " />
+				<TextBlock
+						Text="{Binding ., Converter={StaticResource Ingredients}}"
+						Style="{StaticResource LabelStyle}" />
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate
+				x:Key="titleElementTemplate" >
+			<StackPanel
+					Margin="5,5,5,0"
+					Orientation="Horizontal" >
+				<TextBlock
+						Text="{Binding Name}"
+						Style="{StaticResource BoldLabelStyle}" />
+			</StackPanel>
+		</DataTemplate>
+	</UserControl.Resources>
+
+	<StackPanel>
+		<TextBlock
+				x:Name="title"
+				Text="{StaticResource IngredientsTitleLabel}"
+				Style="{StaticResource TitleLabelStyle}" />
+
+		<ItemsControl
+				x:Name="list"
+				ItemsSource="{Binding IngredientsList, ElementName=root}"
+				Height="230"
+				ItemTemplateSelector="{StaticResource ingredientTemplate}" >
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel
+							Orientation="Vertical" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>
+	</StackPanel>
+</UserControl>

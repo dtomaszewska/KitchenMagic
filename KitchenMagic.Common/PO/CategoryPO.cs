@@ -1,6 +1,7 @@
-﻿using MvvmCross.Core.ViewModels;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using MvvmCross.Core.ViewModels;
 
 namespace KitchenMagic.Common.PO
 {
@@ -51,6 +52,32 @@ namespace KitchenMagic.Common.PO
 				ChildCategories.Remove(cat);
 				OnPropertyChanged(nameof(ChildCategories));
 			}
+		}
+	}
+
+	public static class CategoryPOExtensions
+	{
+		public static CategoryPO FirstOrDefault(this List<CategoryPO> node, Func<CategoryPO, bool> predicate)
+		{
+			return node?.Select(child => FirstOrDefault(child, predicate)).FirstOrDefault(found => found != null);
+		}
+
+		public static CategoryPO FirstOrDefault(this CategoryPO node, Func<CategoryPO, bool> predicate)
+		{
+			if (node == null)
+				return null;
+
+			if (predicate.Invoke(node))
+				return node;
+
+			foreach (var child in node.ChildCategories)
+			{
+				var found = FirstOrDefault(child, predicate);
+				if (found != null)
+					return found;
+			}
+
+			return null;
 		}
 	}
 }

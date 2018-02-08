@@ -1,19 +1,17 @@
-﻿using KitchenMagic.Common.Services;
+﻿using System.Windows.Threading;
+using KitchenMagic.Common.Services;
 using KitchenMagic.Common.Services.Stubs;
 using KitchenMagic.Wpf.Services;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Wpf.Platform;
 using MvvmCross.Wpf.Views;
-using System.Windows.Threading;
 
 namespace KitchenMagic.Wpf.MvxApp
 {
-	public class Setup: MvxWpfSetup
+	public class Setup : MvxWpfSetup
 	{
-		public Setup(Dispatcher uiThreadDispatcher, IMvxWpfViewPresenter presenter) : base(uiThreadDispatcher, presenter)
-		{
-		}
+		public Setup(Dispatcher uiThreadDispatcher, IMvxWpfViewPresenter presenter) : base(uiThreadDispatcher, presenter) {}
 
 		protected override IMvxApplication CreateApp()
 		{
@@ -25,11 +23,14 @@ namespace KitchenMagic.Wpf.MvxApp
 			base.Initialize();
 			RegisterTypes();
 		}
+
 		private void RegisterTypes()
 		{
 			Mvx.RegisterType<IGoogleLoginService, GoogleLoginServiceWpf>();
-			Mvx.RegisterType<ICategoryService, CategoryServiceStub>();
-			Mvx.RegisterType<IRecipeService, RecipeServiceStub>();
+			Mvx.LazyConstructAndRegisterSingleton<IGoogleDriveService, GoogleDriveService>();
+			Mvx.LazyConstructAndRegisterSingleton<ICategoryService, CategoryServiceStub>();
+			Mvx.LazyConstructAndRegisterSingleton<IRecipeService, RecipeServiceStub>();
+			Mvx.LazyConstructAndRegisterSingleton<IRecipeEditionService, RecipeEditionService>();
 		}
 	}
 }

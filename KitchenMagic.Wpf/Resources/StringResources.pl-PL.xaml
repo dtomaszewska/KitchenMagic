@@ -26,4 +26,7 @@
 	<system:String x:Key="CookTimeTitleLabel">Czas przygotowania</system:String>
 	<system:String x:Key="ReadyInTitleLabel">Gotowe w</system:String>
 
+	<system:String x:Key="UploadFile">Wczytaj zdjęcie</system:String>
+	<system:String x:Key="Save">Zapisz zmiany</system:String>
+
 </ResourceDictionary>

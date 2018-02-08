@@ -12,7 +12,7 @@
 		public const string ApplicationName = "Kitchen Magic";
 		public const string WPFCredentialPath = "Kitchen Magic";
 		public const string DriveAplicationDirectory = "KitchenMagic";
+		public const string DriveImagesDirectory = "KitchenMagicImages";
 		public const string DriveAplicationDb = "recipiesDb.sqlite";
-
 	}
 }
