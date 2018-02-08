@@ -24,9 +24,8 @@
 		<Button
 				HorizontalAlignment="Center"
 				Width="250"
-				Background="Transparent"
-				Command="{Binding GoogleButtonCommand, ElementName=root}"
-				BorderBrush="Transparent" >
+				Style="{StaticResource ButtonStyle}"
+				Command="{Binding GoogleButtonCommand, ElementName=root}" >
 			<Image
 					Source="pack://application:,,,/Resources/images/button_google_login.png"
 					Stretch="UniformToFill" />

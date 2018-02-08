@@ -10,10 +10,15 @@ namespace KitchenMagic.Wpf.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var ingredient = (IngredientPO)value;
-			return ingredient != null
-				? $"{ingredient.Name} - {ingredient.Count} {(ingredient.Unit == Unit.item ? string.Empty : ingredient.Unit.ToString())}"
-				: null;
+			if (value is IngredientPO ingredient)
+			{
+				if (ingredient.IsTitle)
+					return ingredient.Name;
+
+				return $"{ingredient.Name} - {ingredient.Count} {(ingredient.Unit == Unit.item ? string.Empty : ingredient.Unit.ToString())}";
+			}
+
+			return string.Empty;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

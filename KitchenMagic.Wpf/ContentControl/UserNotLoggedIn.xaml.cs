@@ -21,6 +21,6 @@ namespace KitchenMagic.Wpf.ContentControl
 		}
 
 		public static readonly DependencyProperty GoogleButtonCommandProperty =
-			DependencyProperty.Register("GoogleButtonCommand", typeof(ICommand), typeof(UserNotLoggedIn));
+			DependencyProperty.Register(nameof(GoogleButtonCommand), typeof(ICommand), typeof(UserNotLoggedIn));
 	}
 }

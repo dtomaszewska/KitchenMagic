@@ -1,9 +1,9 @@
-﻿using KitchenMagic.Common.PO;
+﻿using System;
+using System.Threading.Tasks;
+using KitchenMagic.Common.PO;
 using KitchenMagic.Common.Services;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
-using System;
-using System.Threading.Tasks;
 
 namespace KitchenMagic.Wpf.ViewModels
 {
@@ -17,15 +17,10 @@ namespace KitchenMagic.Wpf.ViewModels
 		{
 			_recipeService = Mvx.Resolve<IRecipeService>();
 			RecipeList = new MvxObservableCollection<RecipePO>();
-
-			CategoryId = Guid.Empty;
 		}
 
-		public RecipeListViewModel(Guid categoryId)
+		public RecipeListViewModel(Guid categoryId) : this()
 		{
-			_recipeService = Mvx.Resolve<IRecipeService>();
-			RecipeList = new MvxObservableCollection<RecipePO>();
-
 			CategoryId = categoryId;
 		}
 
@@ -47,7 +42,9 @@ namespace KitchenMagic.Wpf.ViewModels
 
 		private async Task RefreshRecipeList()
 		{
-			RecipeList.ReplaceWith(await _recipeService.GetAll(CategoryId));
+			RecipeList.Clear();
+			foreach (var recipe in await _recipeService.GetAll(CategoryId))
+				RecipeList.Add(recipe);
 		}
 	}
 }

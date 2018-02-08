@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:system="clr-namespace:System;assembly=mscorlib">
+		xmlns:system="clr-namespace:System;assembly=mscorlib"
+		xmlns:controls="clr-namespace:KitchenMagic.Wpf.ContentControl.Controls" >
 
 	<!-- String resource that can be localized -->
 	<system:String x:Key="Recipes">_Recipes</system:String>
@@ -26,15 +27,23 @@
 	<system:String x:Key="CookTimeTitleLabel">Cook Time</system:String>
 	<system:String x:Key="ReadyInTitleLabel">Ready In</system:String>
 
+	<system:String x:Key="UploadFile">Upload image</system:String>
+	<system:String x:Key="Save">Save</system:String>
+
 	<!-- SIZES -->
 	<system:Double x:Key="SpliterSize">5</system:Double>
 	<Thickness x:Key="SpliterSizeThickness">5</Thickness>
+	<system:Double x:Key="FontSize">14</system:Double>
+	<system:Double x:Key="TitleFontSize">18</system:Double>
+	<system:Double x:Key="RecipeTitleFontSize">26</system:Double>
+	<system:Double x:Key="LockMessageFontSize">42</system:Double>
 
 	<!-- COLORES -->
 	<Brush x:Key="SpliterColor">White</Brush>
 	<Brush x:Key="AlmostWhiteGray">#F9FAFC</Brush>
 	<Brush x:Key="Gray">#595959</Brush>
 	<Brush x:Key="AlmostBlackGray">#333333</Brush>
+	<Brush x:Key="HoverColor">#dddddd</Brush>
 
 	<!-- IMAGE styles -->
 	<Style x:Key="MenuIconImageStyle" TargetType="{x:Type Image}">
@@ -43,9 +52,22 @@
 		<Setter Property="HorizontalAlignment" Value="Center" />
 	</Style>
 
+	<!-- Button styles -->
+	<Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="FontSize" Value="{StaticResource FontSize}" />
+		<Setter Property="Foreground" Value="{StaticResource Gray}" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+	</Style>
+
+	<Style x:Key="BorderdButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+		<Setter Property="BorderThickness" Value="1" />
+	</Style>
+
 	<!-- LABEL styles -->
 	<Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}">
-		<Setter Property="FontSize" Value="12" />
+		<Setter Property="FontSize" Value="{StaticResource FontSize}" />
 		<Setter Property="TextWrapping" Value="Wrap" />
 		<Setter Property="Foreground" Value="{StaticResource Gray}" />
 	</Style>
@@ -56,20 +78,59 @@
 	</Style>
 
 	<Style x:Key="TitleLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldLabelStyle}">
-		<Setter Property="FontSize" Value="26" />
+		<Setter Property="FontSize" Value="{StaticResource TitleFontSize}" />
+	</Style>
+
+	<Style x:Key="MainTitleLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldLabelStyle}">
+		<Setter Property="FontSize" Value="{StaticResource RecipeTitleFontSize}" />
 		<Setter Property="HorizontalAlignment" Value="Center" />
 	</Style>
 
-	<Style x:Key="SubtitleLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldLabelStyle}">
-		<Setter Property="FontSize" Value="20" />
-	</Style>
-
-	<Style x:Key="RecipeLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource LabelStyle}">
-		<Setter Property="FontSize" Value="16" />
-	</Style>
-
 	<Style x:Key="BigMessageLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldLabelStyle}">
-		<Setter Property="FontSize" Value="42" />
+		<Setter Property="FontSize" Value="{StaticResource LockMessageFontSize}" />
+	</Style>
+
+	<!-- TextBox styles -->
+	<Style x:Key="TextBoxControlStyle" TargetType="{x:Type controls:TextBoxControl}">
+		<Setter Property="FontSize" Value="{StaticResource FontSize}" />
+		<Setter Property="TextWrapping" Value="Wrap" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="BaseForegroundColor" Value="{StaticResource Gray}" />
+		<Setter Property="MinWidth" Value="25" />
+	</Style>
+
+	<Style x:Key="TextBoxControlBoldStyle" TargetType="{x:Type controls:TextBoxControl}" BasedOn="{StaticResource TextBoxControlStyle}">
+		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="BaseForegroundColor" Value="{StaticResource AlmostBlackGray}" />
+	</Style>
+
+	<Style x:Key="TextBoxControlMainTitleStyle" TargetType="{x:Type controls:TextBoxControl}" BasedOn="{StaticResource TextBoxControlBoldStyle}">
+		<Setter Property="FontSize" Value="{StaticResource RecipeTitleFontSize}" />
+		<Setter Property="HorizontalAlignment" Value="Center" />
+	</Style>
+
+	<!-- TimeControl styles -->
+	<Style x:Key="TimeControlStyle" TargetType="{x:Type controls:TimeControl}">
+		<Setter Property="FontSize" Value="{StaticResource FontSize}" />
+		<Setter Property="BaseForegroundColor" Value="{StaticResource Gray}" />
+	</Style>
+
+	<!-- MultiselectControl styles -->
+	<Style x:Key="MultiselectStyle" TargetType="{x:Type controls:MultiselectControl}">
+		<Setter Property="FontSize" Value="{StaticResource FontSize}" />
+		<Setter Property="ForegroundColor" Value="{StaticResource Gray}" />
+	</Style>
+
+	<!-- ComboBox styles -->
+	<Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
+		<Setter Property="FontSize" Value="{StaticResource FontSize}" />
+		<Setter Property="Foreground" Value="{StaticResource Gray}" />
+		<Setter Property="BorderThickness" Value="0" />
+	</Style>
+
+	<!-- MenuItem styles -->
+	<Style x:Key="MenuItemStyle" TargetType="{x:Type MenuItem}">
+		<Setter Property="FontSize" Value="{StaticResource FontSize}" />
 	</Style>
 
 </ResourceDictionary>

@@ -15,15 +15,17 @@
 				ItemsSource="{Binding RecipeList}" >
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<Button BorderThickness="0" Background="Transparent"
+					<Button
+							Style="{StaticResource ButtonStyle}"
 							Command="{Binding ElementClickCommand, ElementName=root}"
-							CommandParameter="{Binding .}">
+							CommandParameter="{Binding .}" >
 						<StackPanel>
 							<Image
 									Height="150"
 									Source="{Binding Image}" />
 							<TextBlock
 									TextAlignment="Center"
+									Style="{StaticResource LabelStyle}"
 									Text="{Binding Title}" />
 						</StackPanel>
 					</Button>

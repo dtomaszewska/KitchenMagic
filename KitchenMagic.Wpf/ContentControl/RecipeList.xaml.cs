@@ -21,6 +21,6 @@ namespace KitchenMagic.Wpf.ContentControl
 		}
 
 		public static readonly DependencyProperty ElementClickCommandProperty =
-			DependencyProperty.Register("ElementClickCommand", typeof(ICommand), typeof(RecipeList));
+			DependencyProperty.Register(nameof(ElementClickCommand), typeof(ICommand), typeof(RecipeList));
 	}
 }
