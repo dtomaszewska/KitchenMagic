@@ -123,6 +123,9 @@
     <Compile Include="ContentControl\RecipeList.xaml.cs">
       <DependentUpon>RecipeList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContentControl\MenuControl.xaml.cs">
+      <DependentUpon>MenuControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentControl\UserNotLoggedIn.xaml.cs">
       <DependentUpon>UserNotLoggedIn.xaml</DependentUpon>
     </Compile>
@@ -164,6 +167,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ContentControl\RecipeList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ContentControl\MenuControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -150,7 +150,7 @@ namespace KitchenMagic.Wpf.ViewModels
 
 		private void AddRecipeCommandAction(CategoryPO category)
 		{
-			if (category.Id != Guid.Empty)
+			if (category?.Id != Guid.Empty)
 				CurrentStateViewModel = new RecipeAddEditViewModel(null);
 		}
 

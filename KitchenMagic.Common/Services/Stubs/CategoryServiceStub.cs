@@ -25,6 +25,11 @@ namespace KitchenMagic.Common.Services.Stubs
 				.AddChild(
 					new CategoryPO
 						{ Id = System.Guid.NewGuid(), Name = "Z owocami" });
+
+			_categories.LastOrDefault().ChildCategories.LastOrDefault()
+				.AddChild(
+					new CategoryPO
+						{ Id = System.Guid.NewGuid(), Name = "Truskawki" });
 		}
 
 		public async Task<List<CategoryPO>> GetAll()
